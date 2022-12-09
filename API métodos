@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div class="idGlobal"></div>
+
+ 
+    <div class="userCriado"></div>
+    <div class="pegarINFOespecifica"></div>
+    <div class="update"></div>
+    <div class="deleteUser"></div>
+ 
+    <script>
+        const url = `https://jsonplaceholder.typicode.com/todos`
+        let GetInfo = document.querySelector('.idGlobal')
+        let userCriadoo = document.querySelector('.userCriado')
+        let GetinfoEspecifica = document.querySelector('.pegarINFOespecifica')
+        let updateNewinfoUser = document.querySelector('.update')
+        let deleteUser = document.querySelector('.deleteUser')
+
+    
+         function pegar() { // aqui eu so to pegando a informação e mostrando na tela html
+            axios.get('https://jsonplaceholder.typicode.com/todos/1')
+             .then( (response) => {
+                GetInfo.textContent = JSON.stringify(response.data) // tranformando em texto facil/JSON pra mostra no html
+             }).catch ( (error) => {
+                console.log('Houve algum tipo de erro na url')
+             })
+            }
+
+            // resposta = varios id até 200
+            
+         function addUser(){ // aqui eu criei um user e só que eu não consigo adicionar ele na tela, pq ele não está inserido na API e só vai até o id 200
+            axios.post(url, { // aqui eu criei um user novo, como só vai até o id 200, ele automaticamente é id 201
+                userId: 2,
+                title: 'Brasil te amaaa',
+                completed: false,
+               
+            })
+            .then( (response) => {
+                userCriadoo.textContent = JSON.stringify(response.data)
+            }).catch( (error) => {
+                console.log(error)
+            })
+         }
+
+         // resposta = {"userId":2,"title":"Brasil te amaaa","completed":false,"id":201} // user criado
+
+         function getUser(){ // aqui eu estou tentando pegar uma informação de user especifico e quero retornar na tela html
+            axios.get('https://jsonplaceholder.typicode.com/todos/200')// estou pegando do id 200, pq só vai ate ele, o id 201 nao existi
+             .then( (response) => {
+               GetinfoEspecifica.textContent = ` o userId ${response.data.userId} é do id principal 200, infelizmente so vai até 200. `
+             }).catch( (error) => {
+                console.log(error)
+             })
+         }
+
+         // resposta = pegando o userId de um ID especifico nesse caso o do 200, 
+         // o userId 10 é do id principal 200, infelizmente so vai até 200.
+       
+         function updateUser() { //aqui eu estou mandando um update mudando o userId do id 200
+            axios.put('https://jsonplaceholder.typicode.com/todos/200', {
+               userId: 15 // userId era 10, mudei pra 15
+            })
+             .then( (response) => {
+               updateNewinfoUser.textContent =  `o userID era 10, mas foi atualizado para ${response.data.userId}`
+               
+             })
+             .catch( (error) => {
+               console.log(error)
+             })
+         }
+
+         // resposta = o userID era 10, mas foi atualizado para 15
+        
+         function DeleteUser() { // aqui eu estou usando método (delete) no ID 1, mandando apagar suas informações
+            axios.delete('https://jsonplaceholder.typicode.com/todos/1')
+             .then(  (response) => {
+               console.log(response.data) // mandando apagar tudo {"userId":1,"id":1,"title":"delectus aut autem","completed":false}
+             }).catch ((error) =>{ // usando o catch pra se tiver um erro, esse erro seja capturado e mostre no console
+               console.log(error)
+             })
+         }
+         
+         // na função DeleteUser o console.log(response.data) está retornando o status: 200, logo foi aceito a função delete, informações apagadas
+            
+     
+           pegar()      // invocando a função
+           addUser()    // invocando a função
+           getUser()    // invocando a função
+           updateUser() // invocando a função
+           DeleteUser() // invocando a função
+           
+        
+           
+          
+           
+          
+     
+    </script>
+</body>
+</html>
