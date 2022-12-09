@@ -88,8 +88,15 @@
              })
          }
          
-         // na função DeleteUser o console.log(response.data) está retornando o status: 200, logo foi aceito a função delete, informações apagadas
-            
+         // na função DeleteUser o console.log(response.data) está retornando o status: 200, logo foi aceito a função delete, (informações apagadas)
+           
+           if(DeleteUser){ // se tiver tido a função (DeleteUser) automaticamente vai deletar a informção do html respectiva ao ID 1
+            let container = document.querySelector('.container')
+            container.removeChild(GetInfo) 
+            // apagando a informação que foi apagada pelo Delete so que agora apagando do html
+         }
+
+           
      
            pegar()      // invocando a função
            addUser()    // invocando a função
